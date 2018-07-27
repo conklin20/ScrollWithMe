@@ -98,7 +98,7 @@ var LINKEDIN_CALLBACK = process.env.LINKEDIN_CALLBACK;
 passport.use(new LinkedinStrategy({
         clientID: LINKEDIN_CLIENT_ID,
         clientSecret: LINKEDIN_CLIENT_SECRET,
-        callbackURL: LINKEDIN_CALLBACK || "https://personal-conklin20.c9users.io/auth/linkedin/callback",
+        callbackURL: LINKEDIN_CALLBACK || "https://scroll-with-me-conklin20.c9users.io/auth/linkedin/callback",
         scope: ['r_basicprofile', 'r_emailaddress'],
         passReqToCallback: true
     },
