@@ -1,0 +1,140 @@
+/*General Styles*/
+body {
+  background-color: #F0EFEF;
+}
+
+hr {
+    height: 2px;
+    background-color: gray;
+    margin: 50px 0;
+}
+
+ul span{
+    cursor: pointer;
+}
+
+.section{
+  margin: 2% 0;
+}
+
+.section li{
+  font-size: 1.8rem;
+}
+
+.section h2{
+  text-align: center;
+}
+
+/*this is not the header nav bar, its for the tabs used in editing a resume*/
+/*resume nav */
+#nav-tabs .nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+  font-weight: bold;
+}
+
+#nav-tabs .tab-content {
+  /*color : white;*/
+  border: solid 2px #428bca;
+  /*background-color: #428bca;*/
+  padding : 5px 15px;
+  border-radius: 0% 5em 0% 5em;
+  box-shadow: inset 0 0 10px #428bca;
+}
+
+/*user overview page css*/
+.account-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  min-height: 40vh;
+}
+
+.account-section h3{
+  margin-top: 2%;
+}
+
+.account-section .buttons{
+  width: 60%;
+  display: flex;
+  justify-content: space-around;
+  margin: 2% 2%;
+}
+
+/*END user overview page css*/
+
+/*edit resume css*/
+.settings{
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2% 2%;
+}
+
+.settings div{
+  margin: 1% 1%;
+}
+
+.timeline-summary {
+  display: flex;
+  border-color: transparent; 
+  text-align: center; 
+}
+
+.event{
+  display: flex;
+  flex-direction: column;
+  width: 100px; 
+  height: auto; 
+  margin-right: 5px;
+}
+
+.resume {
+  display: flex;
+  flex-direction: column;
+}
+
+.resumeContent a {
+  text-decoration: none;
+}
+
+.proficiency {
+  display: flex; 
+  justify-content: space-between;
+}
+
+.new-category{
+  width: 90%; 
+  margin-left: 5%;
+}
+
+.new-category input{
+  margin-top: 2%;
+}
+
+.order{
+  display: flex; 
+  flex-direction: column;
+}
+
+.order-section{
+  /*border: red solid 2px;*/
+  display: flex; 
+  justify-content: space-between;
+}
+
+#order-title{
+  font-size: 1.5em;
+  /*background-color: yellow;*/
+}
+
+#order-btns i{
+  padding-left: 5px;
+  color: #428bca;
+}
+
+.footer{
+  display: flex; 
+  justify-content: center;
+  margin: 5% 5%; 
+}
