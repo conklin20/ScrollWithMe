@@ -12,7 +12,7 @@ var express                 = require('express'),
     //forceSsl                = require('force-ssl-heroku'),
     app                     = express();
 
-const ENV_TEST = false;
+const DEV_ENV = false;
 
 // **********************
 // Hookup Routes
@@ -54,7 +54,7 @@ var apiRoutes = [apiResumeIndex, apiTimeline, apiSkills, apiExperience, apiEduca
 //      OR: you can go to your Heroku account, and under settings of your app find "config vars" and manually add key: DATABASEURL value:  { heroku url string }
 //      URL for this Heroku db: mongodb://<username>:<password>@ds219318.mlab.com:19318/yelpcamp
 // **********************
-if(ENV_TEST) {
+if(DEV_ENV) {
     mongoose.connect("mongodb://localhost/MyResume_v3");
 } else {
     mongoose.connect(process.env.DATABASECON || "mongodb://localhost/MyResume_v3");
@@ -146,7 +146,7 @@ app.use(function(req, res, next) {
     res.locals.error        = req.flash("error");
     res.locals.success      = req.flash("success");
     res.locals.warning      = req.flash("warning");
-    res.locals.testing      = ENV_TEST;
+    res.locals.testing      = DEV_ENV;
     next();
 });
 
