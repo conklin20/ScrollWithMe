@@ -2,6 +2,7 @@ var express         = require("express"),
     User            = require("../../../models/users"),
     Resume          = require("../../../models/resumes"),
     middleware      = require("../../../middleware/auth.js"),
+    mongoose        = require("mongoose"), 
     router          = express.Router();
 
 const rootUrl = '/api/u/:userId/r/:resumeId';
@@ -34,6 +35,30 @@ router.post('/api/u/:userId/r', middleware.ensureAuthenticated, function(req, re
             res.redirect('/u/' + req.params.userId + "/r/" + newResume._id + '/edit');
           }
       });
+    }
+  }); 
+});
+
+// CREATE NEW RESUME BY CLONING EXISTING 
+router.post(rootUrl + '/clone', middleware.ensureAuthenticated, function(req, res){
+  //find the user in the DB 
+  User.findById(req.params.userId, function(err, foundUser){
+    if(err){
+      console.log(err); 
+    } else {
+      Resume.findById(req.params.resumeId).exec(function(err, clone) {
+          clone._id = mongoose.Types.ObjectId();
+          clone.alias = clone.alias + ' (Clone)'
+          clone.isNew = true; //<--------------------IMPORTANT
+          clone.save();
+          
+          foundUser.resumes.push(clone._id); 
+          foundUser.save(); 
+          
+          res.status(200).json(clone);
+          
+        }
+      );
     }
   }); 
 });

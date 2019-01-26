@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 //user schema 
 var resumeSchema = new mongoose.Schema({
-    alias: { type: String, unique : true},
+    alias: { type: String /*, unique : true*/ },
     introduction: String,
     elevatorPitch: String,
     objective: String,

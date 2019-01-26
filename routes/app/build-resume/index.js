@@ -4,7 +4,7 @@ var express         = require("express"),
     middleware      = require("../../../middleware/auth.js"),
     router          = express.Router();
 
-// CREATE NEW RESUME
+// SHOW CREATE NEW RESUME PAGE
 router.get('/u/:userId/r', middleware.ensureAuthenticated, function(req, res){
   //find the user in the DB 
   User.findById(req.params.userId, function(err, foundUser){
@@ -16,17 +16,6 @@ router.get('/u/:userId/r', middleware.ensureAuthenticated, function(req, res){
   }); 
 });
 
-// CREATE NEW RESUME BY CLONING EXISTING 
-router.get('/u/:userId/r/:resumeId/clone', middleware.ensureAuthenticated, function(req, res){
-  //find the user in the DB 
-  User.findById(req.params.userId, function(err, foundUser){
-    if(err){
-      console.log(err); 
-    } else {
-      res.status(404).json({data: "Unable to clone resume."});
-    }
-  }); 
-});
 
 // SHOW RESUME EDIT PAGE
 router.get('/u/:userId/r/:resumeId/edit', middleware.isAccountOwner, function(req, res){
@@ -40,8 +29,8 @@ router.get('/u/:userId/r/:resumeId/edit', middleware.isAccountOwner, function(re
         } else {
           res.render('resume-edit', { user: foundUser, resume: foundResume });
         }
-        });
-      }
+      });
+    }
   }); 
 });
 
