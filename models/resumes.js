@@ -162,6 +162,10 @@ var resumeSchema = new mongoose.Schema({
     //         order: Number
     //     }
     //     ]
+    ,
+    
+    //1/24/2019
+    tags: []
 });
 
 

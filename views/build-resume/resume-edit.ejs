@@ -42,6 +42,9 @@
 		    <li id="nav-other">
                 <a href="#other" data-toggle="tab">Other</a>
     		</li>
+		    <li id="nav-tags">
+                <a href="#tags" data-toggle="tab">Tags</a>
+    		</li>
 		    <li id="nav-order">
                 <a href="#order" data-toggle="tab">Order</a>
     		</li>
@@ -1048,6 +1051,50 @@
             <!--other end-->
             
             <!------------------------------------------------------------------->
+            <!--tags start-->
+            <div class="tab-pane section" id="tags">
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="form-horizontal">  
+                          <h2 style="text-align: center;">Tags</h2>
+                          <p>
+                            Tags/Key Words will be added to the bottom of your printable resume. They will be added in tiny, white font, so no one will actually see them.
+                            These are designed to allow your resume to be picked up by an ATS (Applicant Tracking System). You should try and match as many key words you find on the job posting you're applying for. 
+                          </p>
+                        </div>
+                        <hr>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label class="pull-left" for="tag">Tag: </label>
+                                    <input class="form-control new-tag" type="text" name="tag" placeholder="tag">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                    <button id="btn-add-new-tag" class="btn btn-primary btn-block">Add Tag</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <h3>Tags</h3>
+                            <ul class="tags">
+                              <!--This is now being rendered in '/public/js/build-resume/index.js' using AJAX calls-->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--tags end-->
+            
+            <!------------------------------------------------------------------->
             <!--order start-->
             <div class="tab-pane section" id="order">
                 <div class="row">
@@ -1085,6 +1132,7 @@
     <script type="text/javascript" src="/js/build-resume/interests.js"></script>
     <script type="text/javascript" src="/js/build-resume/projects.js"></script>
     <script type="text/javascript" src="/js/build-resume/quotes.js"></script>
+    <script type="text/javascript" src="/js/build-resume/tags.js"></script>
     <script type="text/javascript" src="/js/build-resume/other.js"></script>
         
 <% include ../partials/footer %>

@@ -12,7 +12,7 @@ var express                 = require('express'),
     //forceSsl                = require('force-ssl-heroku'),
     app                     = express();
 
-const DEV_ENV = false;
+const DEV_ENV = true;
 
 // **********************
 // Hookup Routes
@@ -154,7 +154,7 @@ app.use(function(req, res, next) {
 // Use our Routes
 // **********************
 app.use(appRoutes); 
-app.use(apiRoutes); 
+app.use(apiRoutes);
 
 //seed our db for testing only 
 //seedDB();

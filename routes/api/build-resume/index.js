@@ -268,4 +268,60 @@ router.delete(rootUrl, function(req, res){
   }); 
 }); 
 
+//GET TAGS
+router.get(rootUrl + '/tags', middleware.isAccountOwner, function(req, res){
+  Resume.findById(req.params.resumeId, function(err, foundResume) {
+      if(err){
+        console.log(err);
+      } else {
+        res.json(foundResume.tags);
+      }
+  });
+});
+
+// ADD TAGS
+router.post(rootUrl + '/tags', middleware.isAccountOwner, function(req, res){
+  // eval(require('locus'));
+  User.findById(req.params.userId, function(err, foundUser){
+    if(err){
+      console.log(err); 
+    } else {
+      Resume.findById(req.params.resumeId, function(err, foundResume){
+        if(err){
+          console.log(err);
+        } else {
+          
+          foundResume.tags.push(req.body.tag); 
+          
+          foundResume.save();
+          res.status(200).json(foundResume.tags);
+        }
+        });
+      }
+  }); 
+});
+
+// DELETE TAGS
+router.delete(rootUrl + '/tags/:idx', middleware.isAccountOwner, function(req, res){
+  User.findById(req.params.userId, function(err, foundUser){
+    if(err){
+      console.log(err); 
+    } else {
+      Resume.findById(req.params.resumeId, function(err, foundResume){
+        if(err){
+          console.log(err);
+        } else {
+          // eval(require('locus'));
+          // remove tag from array
+          if(req.params.idx !== -1){
+            foundResume.tags.splice(req.params.idx, 1);
+            foundResume.save(); 
+            res.status(200).json(foundResume.tags);
+          }
+        }
+      });
+    }
+  }); 
+});
+
 module.exports = router;

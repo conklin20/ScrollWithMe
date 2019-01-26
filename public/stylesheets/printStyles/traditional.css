@@ -141,3 +141,9 @@ footer p {
     padding-top: 5px; 
     font-size: .7em;
 }
+
+/*these should be hidden in the footer*/
+#tags {
+    font-size: .1em;
+    color: transparent;
+}
