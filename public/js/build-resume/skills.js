@@ -58,6 +58,10 @@ $(document).ready(function(){
   $('#existing-skills li').on('click', function() {
     $('#skill-cat-dropdown').html($(this).find('a').html());
   });
+  
+  $('.skills').on('click', '.toggle-vision', function(){
+    toggleSkillVision($(this).parent(), url);
+  });
 });
 
 
@@ -66,13 +70,19 @@ function displaySkills(skills){
   const catBtns   = ` | <span id="skill-cat-del"><i class="fa fa-trash"></i> | </span> 
                         <span id="skill-cat-dn"><i class="fa fa-chevron-down"></i> | </span> 
                         <span id="skill-cat-up"><i class="fa fa-chevron-up"></i></span> `;
-                        
+  
+  let toggleVisBtns = ""; 
+  
   const skillBtns = ` | <span id="skill-del"><i class="fa fa-trash"></i> | </span> 
                         <span id="skill-dn"><i class="fa fa-chevron-down"></i> | </span>
                         <span id="skill-up"><i class="fa fa-chevron-up"></i></span> `;
   
   skills.forEach(function(skillCat, catIdx){
-    var skillsListHTML = '<li data-catid=' + skillCat._id + '>' + skillCat.category + catBtns;
+    toggleVisBtns = skillCat.hideOnPrint ?  
+           ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+           ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ; 
+    
+    let skillsListHTML = '<li data-catid=' + skillCat._id + '>' + skillCat.category + catBtns + toggleVisBtns;
 
     skillCat.skill.forEach(function(skill, idx){
       if(idx === 0) { skillsListHTML += '<ul>' }
@@ -91,7 +101,7 @@ function addSkill(url){
   let newSkillCategory = $('#new-skill-category').val() ? true : false
   let selectedCategory = $('#skill-cat-dropdown').html($(this).find('a').html());
 
-  var newSkill = {
+  let newSkill = {
     newSkillCategory:   newSkillCategory, 
     category:           newSkillCategory ? $('#new-skill-category').val() : selectedCategory[0].textContent,
     categoryIcon:       $('#new-skill-category').val() ? $('#new-skill-category-icon').val() : null,
@@ -122,7 +132,7 @@ function addSkill(url){
 }
 
 function removeSkillCat(skillCat, url){
-  var deleteUrl = url + '/sc/' + skillCat.data('catid');
+  let deleteUrl = url + '/sc/' + skillCat.data('catid');
 
   // AJAX Call to remove array element from db
   $.ajax({
@@ -141,22 +151,22 @@ function removeSkillCat(skillCat, url){
 }
 
 function moveSkillCat(skillCat, url, direction){
-    var updateUrl = url + '/sc/' + skillCat.data('catid') + '/' + direction;
+  let updateUrl = url + '/sc/' + skillCat.data('catid') + '/' + direction;
 
-    $.ajax({
-      method: 'PUT',
-      url:  updateUrl
-    })
-    .then(function(){
-      rebuildSkillsList(url); 
-    })
-    .catch(function(err){
-      throwErr(err);
-    });
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildSkillsList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
+  });
 }
 
 function removeSkill(skill, url){
-  var deleteUrl = url + '/sc/' + skill.data('catid') + '/s/' + skill.data('id');
+  let deleteUrl = url + '/sc/' + skill.data('catid') + '/s/' + skill.data('id');
   
   $.ajax({
     method: 'DELETE',
@@ -171,18 +181,18 @@ function removeSkill(skill, url){
 }
 
 function moveSkill(skill, url, direction){
-    var updateUrl = url + '/sc/' + skill.data('catid') + '/s/' + skill.data('id') + '/' + direction;
+  let updateUrl = url + '/sc/' + skill.data('catid') + '/s/' + skill.data('id') + '/' + direction;
 
-    $.ajax({
-      method: 'PUT',
-      url:  updateUrl
-    })
-    .then(function(){
-      rebuildSkillsList(url);
-    })
-    .catch(function(err){
-      throwErr(err);
-    });
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildSkillsList(url);
+  })
+  .catch(function(err){
+    throwErr(err);
+  });
 }
 
 function rebuildSkillsList(url){
@@ -193,5 +203,21 @@ function rebuildSkillsList(url){
   .then(displaySkills)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleSkillVision(skill, url){
+  let updateUrl = url + '/sc/' + skill.data('catid');
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildSkillsList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

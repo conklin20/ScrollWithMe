@@ -42,6 +42,11 @@ $(document).ready(function(){
   $('.projects').on('click', '#bullet-up', function(){
     moveProjectBullet($(this).parent(), url, 'up');
   });
+  
+  $('.projects').on('click', '.toggle-vision', function(){
+    toggleProjectVision($(this).parent(), url);
+  });
+  
 });
 
 function displayProjects(projects){
@@ -51,9 +56,12 @@ function displayProjects(projects){
 }
 
 function appendProject(project, projArr){
-  const projectBtns = ` | <span id="project-del"><i class="fa fa-trash"></i></span> `; 
+  let projectBtns = ` | <span id="project-del"><i class="fa fa-trash"></i></span> `; 
+  projectBtns += project.hideOnPrint ?  
+           ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+           ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ; 
 
-  var projectHTML = '<li data-projectid=' + project._id + '>' + project.name + projectBtns;
+  let projectHTML = '<li data-projectid=' + project._id + '>' + project.name + projectBtns;
   
   //append the project level element 
   $('.projects').append(projectHTML);
@@ -63,7 +71,7 @@ function appendProject(project, projArr){
                             <span id="bullet-dn"><i class="fa fa-chevron-down"></i> | </span>
                             <span id="bullet-up"><i class="fa fa-chevron-up"></i></span> `; 
            
-  var bulletHTML = ''
+  let bulletHTML = ''
   
   project.projectDetail.forEach(function(bullet, idx, arr){
     bulletHTML += (idx === 0 ? '<ul id="' + project._id + '">' : '') +  '<li data-projectid=' + project._id + ' data-bulletidx=' + idx + '>' + bullet  + bulletBtns + '</li>' + (idx === arr.length-1 ? '</ul>' : '');
@@ -73,7 +81,7 @@ function appendProject(project, projArr){
 }
 
 function addProject(project, url){
-  var newProject = {
+  let newProject = {
     name:           project[0].value,
     description:    project[1].value,
     url:            project[2].value,
@@ -103,8 +111,8 @@ function addProject(project, url){
 }
 
 function addProjectBullet(bullet, url){
-  var updateUrl = url + '/b';
-  var newBullet = {
+  let updateUrl = url + '/b';
+  let newBullet = {
     id:     bullet[0].value,
     projectDetail: bullet[1].value
   };
@@ -132,7 +140,7 @@ function addProjectBullet(bullet, url){
 }
 
 function removeProject(project, url){
-  var deleteUrl = url + '/p/' + project.data('projectid');
+  let deleteUrl = url + '/p/' + project.data('projectid');
   
   // AJAX Call to remove array element from db
   $.ajax({
@@ -155,8 +163,8 @@ function removeProject(project, url){
 }
 
 function removeProjectBullet(bullet, url){
-  var deleteUrl = url + '/p/' + bullet.data('projectid') + '/b/' + bullet.data('bulletidx');
-  console.log(deleteUrl); 
+  let deleteUrl = url + '/p/' + bullet.data('projectid') + '/b/' + bullet.data('bulletidx');
+ 
   // AJAX Call to remove array element from db
   $.ajax({
     method: 'DELETE',
@@ -174,7 +182,7 @@ function removeProjectBullet(bullet, url){
 }
 
 function moveProjectBullet(bullet, url, direction){
-  var updateUrl = url + '/p/' + bullet.data('projectid') + '/b/' + bullet.data('bulletidx') + '/' + direction;
+  let updateUrl = url + '/p/' + bullet.data('projectid') + '/b/' + bullet.data('bulletidx') + '/' + direction;
 
   $.ajax({
     method: 'PUT',
@@ -196,5 +204,21 @@ function rebuildProjectList(url){
   .then(displayProjects)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleProjectVision(project, url){
+  let updateUrl = url + '/p/' + project.data('projectid');
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildProjectList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

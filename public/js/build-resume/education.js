@@ -43,6 +43,10 @@ $(document).ready(function(){
     moveAchievement($(this).parent(), url, 'up');
   });
   
+  $('.education').on('click', '.toggle-vision', function(){
+    toggleSchoolVision($(this).parent(), url);
+  });
+  
 });
 
 
@@ -54,10 +58,12 @@ function displayEducation(education){
 
 function appendEducation(school, educationArr){
   
-  
-  const schoolBtns = ` | <span id="school-del"><i class="fa fa-trash"></i></span> `; 
+  let schoolBtns = ' | <span id="school-del"><i class="fas fa-trash"></i></span> ';
+  schoolBtns += school.hideOnPrint ?  
+             ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+             ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ; 
 
-  var schoolHTML = '<li data-schoolid=' + school._id + '>' + school.instituteName + ' (' + school.city   + ', ' + school.state + ', ' + school.degree + ', ' + school.areaOfStudy  + ')' + schoolBtns;
+  let schoolHTML = '<li data-schoolid=' + school._id + '>' + school.instituteName + ' (' + school.city   + ', ' + school.state + ', ' + school.degree + ', ' + school.areaOfStudy  + ')' + schoolBtns;
   
   //append the school/institute level element 
   $('.education').append(schoolHTML);
@@ -65,9 +71,9 @@ function appendEducation(school, educationArr){
     
   const achievementBtns = ` | <span id="achievement-del"><i class="fas fa-trash"></i> | </span> 
                               <span id="achievement-dn"><i  class="fas fa-chevron-down"></i> | </span>
-                              <span id="achievement-up"><i  class="fas fa-chevron-up"></i></span> `; 
+                              <span id="achievement-up"><i  class="fas fa-chevron-up"></i></span> `;
            
-  var achievementHTML = ''
+  let achievementHTML = ''
   
   school.achievements.forEach(function(achievement, idx, arr){
     achievementHTML += (idx === 0 ? '<ul id="' + school._id + '">' : '') +  '<li data-schoolid=' + school._id + ' data-achievementidx=' + idx + '>' + achievement  + achievementBtns + '</li>' + (idx === arr.length-1 ? '</ul>' : '');
@@ -77,7 +83,7 @@ function appendEducation(school, educationArr){
 }
 
 function addEducation(school, url){
-  var newSchool = {
+  let newSchool = {
     instituteName:  school[0].value,
     city:           school[1].value,
     state:          school[2].value,
@@ -113,8 +119,8 @@ function addEducation(school, url){
 }
 
 function addAchievement(achievement, url){
-  var updateUrl = url + '/a'
-  var newAchievement = {
+  let updateUrl = url + '/a'
+  let newAchievement = {
     school:      achievement[0].value,
     achievement: achievement[1].value
   };
@@ -143,7 +149,7 @@ function addAchievement(achievement, url){
 }
 
 function removeEducation(school, url){
-  var deleteUrl = url + '/s/' + school.data('schoolid');
+  let deleteUrl = url + '/s/' + school.data('schoolid');
 
   // AJAX Call to remove array element from db
   $.ajax({
@@ -165,7 +171,7 @@ function removeEducation(school, url){
 }
 
 function removeAchievement(achievement, url){
-  var deleteUrl = url + '/s/' + achievement.data('schoolid') + '/a/' + achievement.data('achievementidx');
+  let deleteUrl = url + '/s/' + achievement.data('schoolid') + '/a/' + achievement.data('achievementidx');
   console.log(deleteUrl);
   
   // AJAX Call to remove array element from db
@@ -185,7 +191,7 @@ function removeAchievement(achievement, url){
 }
 
 function moveAchievement(achievement, url, direction){
-  var updateUrl = url + '/s/' + achievement.data('schoolid') + '/a/' + achievement.data('achievementidx') + '/' + direction;
+  let updateUrl = url + '/s/' + achievement.data('schoolid') + '/a/' + achievement.data('achievementidx') + '/' + direction;
   console.log(updateUrl); 
   
   // AJAX Call to remove array element
@@ -209,5 +215,21 @@ function rebuildEducationList(url){
   .then(displayEducation)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleSchoolVision(school, url){
+  let updateUrl = url + '/s/' + school.data('schoolid')
+   
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildEducationList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

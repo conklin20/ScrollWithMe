@@ -42,6 +42,10 @@ $(document).ready(function(){
   $('.experience').on('click', '#responsibility-up', function(){
     moveResponsibility($(this).parent(), url, 'up');
   });
+  
+  $('.experience').on('click', '.toggle-vision', function(){
+    toggleCompanyVision($(this).parent(), url);
+  });
 });
 
 function displayExperience(experience){
@@ -51,9 +55,12 @@ function displayExperience(experience){
 }
 
 function appendExperience(company, experienceArr){
-  const companyBtns = ` | <span id="company-del"><i class="fa fa-trash"></i></span> `; 
+  let companyBtns = ' | <span id="company-del"><i class="fa fa-trash"></i></span> ';
+  companyBtns += company.hideOnPrint ?  
+             ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+             ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ;  
 
-  var companyHTML = '<li data-companyid=' + company._id + '>' + company.companyName + ' (' + company.title + ', ' + company.city + ', ' + company.state + ')' + companyBtns;
+  let companyHTML = '<li data-companyid=' + company._id + '>' + company.companyName + ' (' + company.title + ', ' + company.city + ', ' + company.state + ')' + companyBtns;
   
   //append the company level element 
   $('.experience').append(companyHTML);
@@ -63,7 +70,7 @@ function appendExperience(company, experienceArr){
                             <span id="responsibility-dn"><i class="fa fa-chevron-down"></i> | </span>
                             <span id="responsibility-up"><i class="fa fa-chevron-up"></i></span> `; 
            
-  var responsibilityHTML = ''
+  let responsibilityHTML = ''
   
   company.responsibilities.forEach(function(responsibility, idx, arr){
     responsibilityHTML += (idx === 0 ? '<ul id="' + company._id + '">' : '') +  '<li data-companyid=' + company._id + ' data-responsibilityidx=' + idx + '>' + responsibility  + responsibilityBtns + '</li>' + (idx === arr.length-1 ? '</ul>' : '');
@@ -74,7 +81,7 @@ function appendExperience(company, experienceArr){
 
 // add new work experience (company)
 function addExperience(company, url){
-  var newCompany = {
+  let newCompany = {
     companyName:    company[0].value,
     title:          company[1].value,
     city:           company[2].value,
@@ -107,13 +114,11 @@ function addExperience(company, url){
 
 // add new responsibility
 function addResponsibility(responsibility, url){
-  var updateUrl = url + '/r'
-  var newResponsibility = {
+  let updateUrl = url + '/r';
+  let newResponsibility = {
     company: responsibility[0].value,
     responsibility: responsibility[1].value
   };
-  
-  console.log(newResponsibility)
   
   if(newResponsibility.company && newResponsibility.responsibility){
     // AJAX call to add responsibility  
@@ -138,7 +143,7 @@ function addResponsibility(responsibility, url){
 }
 
 function removeExperience(company, url){
-  var deleteUrl = url + '/c/' + company.data('companyid');
+  let deleteUrl = url + '/c/' + company.data('companyid');
 
   // AJAX Call to remove array element from db
   $.ajax({
@@ -162,7 +167,7 @@ function removeExperience(company, url){
 }
 
 function removeResponsibility(responsibility, url){
-  var deleteUrl = url + '/c/' + responsibility.data('companyid') + '/r/' + responsibility.data('responsibilityidx');
+  let deleteUrl = url + '/c/' + responsibility.data('companyid') + '/r/' + responsibility.data('responsibilityidx');
   console.log(deleteUrl);
   // AJAX Call to remove array element from db
   $.ajax({
@@ -182,8 +187,8 @@ function removeResponsibility(responsibility, url){
 }
 
 function moveResponsibility(responsibility, url, direction){
-  var updateUrl = url + '/c/' + responsibility.data('companyid') + '/r/' + responsibility.data('responsibilityidx') + '/' + direction;
-  console.log(updateUrl); 
+  let updateUrl = url + '/c/' + responsibility.data('companyid') + '/r/' + responsibility.data('responsibilityidx') + '/' + direction;
+
   $.ajax({
     method: 'PUT',
     url:  updateUrl
@@ -204,5 +209,21 @@ function rebuildExperienceList(url){
   .then(displayExperience)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleCompanyVision(company, url){
+  let updateUrl = url + '/c/' + company.data('companyid');
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildExperienceList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

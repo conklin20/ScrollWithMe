@@ -51,6 +51,23 @@ router.post(rootUrl, middleware.isAccountOwner, function(req, res){
   });
 });
 
+// TOGGLE SCHOOL VISIBILITY ON PRINT
+router.put(rootUrl + '/q/:quoteId', middleware.isAccountOwner, function(req, res) {
+  Resume.findById(req.params.resumeId, function(err, foundResume){
+    if(err){
+      console.log(err);
+    } else {
+      let index = foundResume.quotes.details.findIndex(quote => quote.id === req.params.quoteId);
+
+      if(index !== -1){
+        foundResume.quotes.details[index].hideOnPrint = !foundResume.quotes.details[index].hideOnPrint;
+        foundResume.save(); 
+        res.status(200).json(foundResume.quotes);
+      }
+    }
+  });
+});
+
 // REMOVE QUOTE
 router.delete(rootUrl + '/q/:quoteId', middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume){

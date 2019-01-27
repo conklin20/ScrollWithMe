@@ -50,6 +50,10 @@ $(document).ready(function(){
   $('.other').on('click', '#section-bullet-up', function(){
     moveSectionBullet($(this).parent(), url, 'up');
   });
+  
+  $('.other').on('click', '.toggle-vision', function(){
+    toggleOtherVision($(this).parent(), url);
+  });
 });
 
 
@@ -60,9 +64,12 @@ function displaySections(sections){
 }
 
 function appendSection(section, sectionArr){
-  const sectiontBtns = ` | <span id="section-del"><i class="fa fa-trash"></i></span> 
+  let sectiontBtns = ` | <span id="section-del"><i class="fa fa-trash"></i></span> 
                           <span id="section-dn"><i class="fa fa-chevron-down"></i> | </span>
                           <span id="section-up"><i class="fa fa-chevron-up"></i></span> `;  
+  sectiontBtns += section.hideOnPrint ?  
+             ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+             ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ;
 
   var sectionHTML = '<li data-sectionid=' + section._id + '>' + section.title + sectiontBtns;
   
@@ -221,5 +228,21 @@ function rebuildSectionList(url){
   .then(displaySections)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleOtherVision(section, url){
+  let updateUrl = url + '/s/' + section.data('sectionid');
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildSectionList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

@@ -51,20 +51,31 @@ $(document).ready(function(){
     $('#interest-cat-dropdown').html($(this).find('a').html());
   });
   
+  
+  $('.interests').on('click', '.toggle-vision', function(){
+    toggleInterestVision($(this).parent(), url);
+  });
+  
 });
 
 function displayInterests(interests){
   //add interests to the page 
-  const catBtns   = ` | <span id="interest-cat-del"><i class="fa fa-trash"></i> | </span> 
+  let catBtns   = ` | <span id="interest-cat-del"><i class="fa fa-trash"></i> | </span> 
                         <span id="interest-cat-dn"><i class="fa fa-chevron-down"></i> | </span> 
                         <span id="interest-cat-up"><i class="fa fa-chevron-up"></i></span> `;
-                        
+  
+  let toggleVisBtns = ""; 
+                       
   const interestBtns = ` | <span id="interest-del"><i class="fa fa-trash"></i> | </span> 
                         <span id="interest-dn"><i class="fa fa-chevron-down"></i> | </span>
                         <span id="interest-up"><i class="fa fa-chevron-up"></i></span> `;
   
   interests.forEach(function(interestCat, interestIdx){
-    var interestsListHTML = '<li data-catid=' + interestCat._id + '>' + interestCat.category + catBtns;
+  toggleVisBtns = interestCat.hideOnPrint ?  
+             ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+             ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ;  
+    
+    let interestsListHTML = '<li data-catid=' + interestCat._id + '>' + interestCat.category + catBtns + toggleVisBtns;
 
     interestCat.interest.forEach(function(interest, idx){
       if(idx === 0) { interestsListHTML += '<ul>' }
@@ -83,7 +94,7 @@ function addInterest(url){
   let newInterestCategory = $('#new-interest-category').val() ? true : false
   let selectedCategory = $('#interest-cat-dropdown').html($(this).find('a').html());
 
-  var newInterest = {
+  let newInterest = {
     newInterestCategory:  newInterestCategory, 
     category:             newInterestCategory ? $('#new-interest-category').val() : selectedCategory[0].textContent,
     categoryIcon:         $('#new-interest-category').val() ? $('#new-interest-category-icon').val() : null,
@@ -113,7 +124,7 @@ function addInterest(url){
 }
 
 function removeInterestCat(interestCat, url){
-  var deleteUrl = url + '/ic/' + interestCat.data('catid');
+  let deleteUrl = url + '/ic/' + interestCat.data('catid');
 
   // AJAX Call to remove array element from db
   $.ajax({
@@ -132,22 +143,22 @@ function removeInterestCat(interestCat, url){
 }
 
 function moveInterestCat(interestCat, url, direction){
-    var updateUrl = url + '/ic/' + interestCat.data('catid') + '/' + direction;
+  let updateUrl = url + '/ic/' + interestCat.data('catid') + '/' + direction;
 
-    $.ajax({
-      method: 'PUT',
-      url:  updateUrl
-    })
-    .then(function(){
-      rebuildInterestList(url); 
-    })
-    .catch(function(err){
-      throwErr(err);
-    });
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildInterestList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
+  });
 }
 
 function removeInterest(interest, url){
-  var deleteUrl = url + '/ic/' + interest.data('catid') + '/i/' + interest.data('idx');
+  let deleteUrl = url + '/ic/' + interest.data('catid') + '/i/' + interest.data('idx');
   
   $.ajax({
     method: 'DELETE',
@@ -164,18 +175,18 @@ function removeInterest(interest, url){
 }
 
 function moveInterest(interest, url, direction){
-    var updateUrl = url + '/ic/' + interest.data('catid') + '/i/' + interest.data('idx') + '/' + direction;
+  let updateUrl = url + '/ic/' + interest.data('catid') + '/i/' + interest.data('idx') + '/' + direction;
 
-    $.ajax({
-      method: 'PUT',
-      url:  updateUrl
-    })
-    .then(function(){
-      rebuildInterestList(url);
-    })
-    .catch(function(err){
-      throwErr(err);
-    });
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildInterestList(url);
+  })
+  .catch(function(err){
+    throwErr(err);
+  });
 }
 
 
@@ -187,5 +198,23 @@ function rebuildInterestList(url){
   .then(displayInterests)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+
+function toggleInterestVision(interest, url){
+  let updateUrl = url + '/ic/' + interest.data('catid');
+  console.log(updateUrl)
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildInterestList(url);
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

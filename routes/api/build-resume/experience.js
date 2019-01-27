@@ -25,7 +25,7 @@ router.put(rootUrl, middleware.isAccountOwner, function(req, res){
   });
 });
 
-//GET ALL TIMELINE EVENTS FOR GIVEN RESUME
+// GET EXPERIENCE DETAILS FOR A GIVEN RESUME
 router.get(rootUrl, middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume) {
       if(err){
@@ -68,6 +68,23 @@ router.put(rootUrl + '/r', middleware.isAccountOwner, function(req, res){
       }
   });
 })
+
+// TOGGLE SCHOOL VISIBILITY ON PRINT
+router.put(rootUrl + '/c/:companyId', middleware.isAccountOwner, function(req, res) {
+  Resume.findById(req.params.resumeId, function(err, foundResume){
+    if(err){
+      console.log(err);
+    } else {
+      let index = foundResume.experience.details.findIndex(company => company.id === req.params.companyId);
+
+      if(index !== -1){
+        foundResume.experience.details[index].hideOnPrint = !foundResume.experience.details[index].hideOnPrint;
+        foundResume.save(); 
+        res.status(200).json(foundResume.experience);
+      }
+    }
+  });
+});
 
 // REMOVE EXPERIENCE (ENTIRE DETAIL ARRAY ELEMENT)
 router.delete(rootUrl + '/c/:companyId', middleware.isAccountOwner, function(req, res){

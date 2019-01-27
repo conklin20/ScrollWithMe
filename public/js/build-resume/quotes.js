@@ -32,15 +32,22 @@ $(document).ready(function(){
       moveQuote($(this).parent(), url, 'up');
   });
   
+  $('.quotes').on('click', '.toggle-vision', function(){
+    toggleQuoteVision($(this).parent(), url);
+  });
 });
 
 function displayQuotes(quotes){
   const quoteBtns = ` | <span id="quote-del"><i class="fa fa-trash"></i> | </span> 
                         <span id="quote-dn"><i class="fa fa-chevron-down"></i> | </span>
                         <span id="quote-up"><i class="fa fa-chevron-up"></i></span> `;
-
+  let toggleVisBtns = ""; 
   quotes.forEach(function(quote, quoteIdx){
-    var quotesHTML = '<li data-quoteid=' + quote._id + '>' + quote.quote + ' - ' + quote.by + quoteBtns +'</li>';
+    toggleVisBtns = quote.hideOnPrint ?  
+           ' | <span class="toggle-vision"><i class="fas fa-eye" title="Make visible on the printable version of your resume."></i></span> ' :
+           ' | <span class="toggle-vision"><i class="fas fa-eye-slash" title="Hide on the printable version of your resume."></i></span> ' ;
+    
+    let quotesHTML = '<li data-quoteid=' + quote._id + '>' + quote.quote + ' - ' + quote.by + quoteBtns + toggleVisBtns +'</li>';
 
     $('.quotes').append(quotesHTML);
   });
@@ -48,12 +55,12 @@ function displayQuotes(quotes){
 
 function addQuote(quote, url){
 
-  var newQuote = {
+  let newQuote = {
     by:           quote[0].value, 
     quote:        quote[1].value, 
     hideOnPrint:  quote[2].checked ? true : false,
   };
-  console.log(newQuote); 
+  
   if(newQuote.quote && newQuote.by){
     $.post(url, { newQuote: newQuote })
     .then(function(addedQuote){
@@ -68,7 +75,7 @@ function addQuote(quote, url){
 }
 
 function removeQuote(quote, url){
-  var deleteUrl = url + '/q/' + quote.data('quoteid');
+  let deleteUrl = url + '/q/' + quote.data('quoteid');
 
   // AJAX Call to remove array element from db
   $.ajax({
@@ -85,7 +92,7 @@ function removeQuote(quote, url){
 }
 
 function moveQuote(quote, url, direction){
-  var updateUrl = url + '/q/' + quote.data('quoteid') + '/' + direction;
+  let updateUrl = url + '/q/' + quote.data('quoteid') + '/' + direction;
   
   // AJAX Call to remove array element
   $.ajax({
@@ -109,5 +116,21 @@ function rebuildQuotesList(url){
   .then(displayQuotes)
   .catch(function(err){
       throwErr(err);
+  });
+}
+
+function toggleQuoteVision(quote, url){
+  let updateUrl = url + '/q/' + quote.data('quoteid');
+  
+  // AJAX Call to toggle visibility
+  $.ajax({
+    method: 'PUT',
+    url:  updateUrl
+  })
+  .then(function(){
+    rebuildQuotesList(url); 
+  })
+  .catch(function(err){
+    throwErr(err);
   });
 }

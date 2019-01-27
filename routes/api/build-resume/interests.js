@@ -6,7 +6,7 @@ var express         = require("express"),
 
 const rootUrl = '/api/u/:userId/r/:resumeId/interests';
 
-//GET ALL TIMELINE EVENTS FOR GIVEN RESUME
+//GET ALL INTERESTS FOR GIVEN RESUME
 router.get(rootUrl, middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume) {
       if(err){
@@ -96,6 +96,24 @@ router.delete(rootUrl + '/ic/:catId', middleware.isAccountOwner, function(req, r
       }
     });
 }); 
+
+
+// TOGGLE SCHOOL VISIBILITY ON PRINT
+router.put(rootUrl + '/ic/:catId', middleware.isAccountOwner, function(req, res) {
+  Resume.findById(req.params.resumeId, function(err, foundResume){
+    if(err){
+      console.log(err);
+    } else {
+      let index = foundResume.interests.details.findIndex(interestCat => interestCat.id === req.params.catId);
+
+      if(index !== -1){
+        foundResume.interests.details[index].hideOnPrint = !foundResume.interests.details[index].hideOnPrint;
+        foundResume.save(); 
+        res.status(200).json(foundResume.interests);
+      }
+    }
+  });
+});
 
 // MOVE A INTEREST CATEGORY UP/DOWN
 router.put(rootUrl + '/ic/:catId/:direction', middleware.isAccountOwner, function(req, res){

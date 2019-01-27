@@ -11,4 +11,5 @@ List Items I am Working On
 2   Done            7/22/18     Reset section                                   /public/js/build-resume/index.js , /routes/api/build-resume/index.js , /views/build-resume/resume-edit.ejs
 3   Done            7/22/18     Created (Started) Data API                      /routes/api/data
 4   Done            1/25/19     Add tags/keywords to resume                     /routes/api/build-resume/index.js , /public/js/build-resume/tags.js , /views/build-resume/resume-edit.ejs , /public/stylesheets/printStyles/traditional.css
-6   Done            1/26/19     Copy/Clone Resume                               /public/js/user/resume.js , /routes/api/build-resume/index.js 
+6   Done            1/26/19     Copy/Clone Resume                               /public/js/user/resume.js , /routes/api/build-resume/index.js
+7   Done            1/26/19     Toggle all 'detail' array visibility on print   /routes/api/build-resume/* , /public/js/build-resume/*

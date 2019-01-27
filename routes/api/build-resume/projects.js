@@ -69,6 +69,23 @@ router.put(rootUrl + '/b', middleware.isAccountOwner, function(req, res){
   });
 });
 
+// TOGGLE SCHOOL VISIBILITY ON PRINT
+router.put(rootUrl + '/p/:projectId', middleware.isAccountOwner, function(req, res) {
+  Resume.findById(req.params.resumeId, function(err, foundResume){
+    if(err){
+      console.log(err);
+    } else {
+      let index = foundResume.projects.details.findIndex(project => project.id === req.params.projectId);
+
+      if(index !== -1){
+        foundResume.projects.details[index].hideOnPrint = !foundResume.projects.details[index].hideOnPrint;
+        foundResume.save(); 
+        res.status(200).json(foundResume.projects);
+      }
+    }
+  });
+});
+
 // REMOVE PROJECT
 router.delete(rootUrl + '/p/:projectId', middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume){

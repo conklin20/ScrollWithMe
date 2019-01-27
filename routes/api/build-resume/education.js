@@ -6,7 +6,7 @@ var express         = require("express"),
 
 const rootUrl = '/api/u/:userId/r/:resumeId/education';
 
-//GET ALL TIMELINE EVENTS FOR GIVEN RESUME
+// GET EDUCATION DETAILS FOR A RESUME
 router.get(rootUrl, middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume) {
       if(err){
@@ -17,7 +17,7 @@ router.get(rootUrl, middleware.isAccountOwner, function(req, res){
   });
 });
 
-// save section settings
+// SAVE SECTION SETTINGS
 router.put(rootUrl, middleware.isAccountOwner, function(req, res){
   Resume.findById(req.params.resumeId, function(err, foundResume) {
     if(err){
@@ -57,6 +57,7 @@ router.put(rootUrl + '/a', middleware.isAccountOwner, function(req, res){
       if(err){
         console.log(err);
       } else {
+        //find the index of the school, using the school, name (seems like this could have some flaws) 
         let index = foundResume.education.details.findIndex(school => school.instituteName === req.body.newAchievement.school);
 
         if(index !== -1){
@@ -68,6 +69,23 @@ router.put(rootUrl + '/a', middleware.isAccountOwner, function(req, res){
       }
   });
 })
+
+// TOGGLE SCHOOL VISIBILITY ON PRINT
+router.put(rootUrl + '/s/:schoolId', middleware.isAccountOwner, function(req, res) {
+  Resume.findById(req.params.resumeId, function(err, foundResume){
+    if(err){
+      console.log(err);
+    } else {
+      let index = foundResume.education.details.findIndex(school => school.id === req.params.schoolId);
+
+      if(index !== -1){
+        foundResume.education.details[index].hideOnPrint = !foundResume.education.details[index].hideOnPrint;
+        foundResume.save(); 
+        res.status(200).json(foundResume.education);
+      }
+    }
+  });
+});
 
 // REMOVE EDUCATION (ENTIRE DETAIL ARRAY ELEMENT)
 router.delete(rootUrl + '/s/:schoolId', middleware.isAccountOwner, function(req, res){
@@ -125,6 +143,7 @@ router.put(rootUrl + '/s/:schoolId/a/:achivIdx' + '/:direction', middleware.isAc
       }
     }); 
 }); 
+
 
 // arrow functioin to swap array element positions
 const swapArrayElements = (arr, x, y) => {
