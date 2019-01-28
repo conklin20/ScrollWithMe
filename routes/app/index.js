@@ -28,6 +28,7 @@ router.get('/:username', function(req, res) {
             // eval(require("locus"))
             if(foundUser.resumes.length > 0){
                 // if a default resume is set use it, otherwise grab the first one
+                // console.log(foundUser.defaults.resume)
                 if (foundUser.defaults.resume){
                     Resume.findById(foundUser.defaults.resume, function(err, foundResume){
                         if(err){
@@ -68,19 +69,36 @@ router.get('/:username/:coverLetterTitle', function(req, res) {
         if(foundUser) {
             // eval(require("locus"))
             if(foundUser.resumes.length > 0){
-                Resume.findById(foundUser.resumes[0], function(err, foundResume){
-                    if(err){
-                        console.log(err);
-                    } else {
-                        CoverLetter.findOne({title: req.params.coverLetterTitle }, function(err, foundCL) {
-                            if(err){
-                                console.log(err);
-                            } else {
-                                res.render('index', { user: foundUser, resume: foundResume, coverLetter: foundCL });
-                            }
-                        });
-                    }
-                }); 
+                // if a default resume is set use it, otherwise grab the first one
+                if (foundUser.defaults.resume){
+                    Resume.findById(foundUser.defaults.resume, function(err, foundResume){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            CoverLetter.findOne({title: req.params.coverLetterTitle }, function(err, foundCL) {
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    res.render('index', { user: foundUser, resume: foundResume, coverLetter: foundCL });
+                                }
+                            });
+                        }
+                    }); 
+                } else {
+                        Resume.findById(foundUser.resumes[0], function(err, foundResume){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            CoverLetter.findOne({title: req.params.coverLetterTitle }, function(err, foundCL) {
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    res.render('index', { user: foundUser, resume: foundResume, coverLetter: foundCL });
+                                }
+                            });
+                        }
+                    }); 
+                }
             } else {
                 // user wasnt found
                 res.status(404).json({ data: "No Resumes Found"});
