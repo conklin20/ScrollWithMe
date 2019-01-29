@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-     <div id="global" class="row" data-userid="<%= user._id %>">
+     <div id="global" class="row" data-userid="<%= user._id %>" data-username="<%= user.username %>" >
         <div class="col-lg-0 col-md-1 col-sm-2 col-xs-2"></div>
         <div class="jumbotron">
             <h2 class="text-center">Hi <%= user.linkedinFirstName %>, welcome to your profile! </h2>
@@ -107,14 +107,37 @@
                     <div class="tab-pane section" id="bundles">
                         <div class="account-section">
                             <h3 class="text-center">Bundles
-                                <!--<a href="/u/<%= user._id %>/bundle/new"><span class="fas fa-plus"></span></a>-->
-                             </h3>
-                             <p>
-                                 Explain bundles...
-                             </p>
-                             <ul class="bundles">
-                                 
-                             </ul>
+                                <span class="badge"><%= user.bundles.length %></span> 
+                            </h3>
+                            <div class="create-bundle">
+                                <div class="form-group">
+                                    <label class="pull-left" for="title">Resume</label>
+                                    <select id="resume-bundle-dd" class="form-control new-bundle" name="bundle[resume]">
+                                        <!--AJAX call in js/user/user-edit.js to load this dd-->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="pull-left" for="title">Cover Letter</label>
+                                    <select id="cl-bundle-dd" class="form-control new-bundle" name="bundle[coverLetter]">
+                                        <!--AJAX call in js/user/user-edit.js to load this dd-->
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="pull-left" for="title">Name/Alias</label>
+                                    <input class="form-control new-bundle" type="text" name="bundle[name]" placeholder="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <button id="btn-add-bundle" class="btn btn-lg btn-success btn-block">Submit!</button>
+                                </div>
+                            </div>
+                        <% if(user.bundles && user.bundles.length > 0) { %>  
+                            <span>Existing Bundles</span>
+                                <ul class="bundles">
+                                    <!--Now using an AJAX call to build out this list-->
+                                </ul>
+                            <% } else { %>
+                                <p>No bundles found</p>
+                            <% } %>
                         </div>
                     </div>
                     <!--Bundles section end-->

@@ -3,6 +3,7 @@
 
 const globalVars = $('#global')
 const userId = globalVars.data('userid');
+const userName = globalVars.data('username');
 
 $(document).ready(function(){
   const url = '/api/u/' + userId; 

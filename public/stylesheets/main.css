@@ -133,6 +133,11 @@ ul span{
   color: #428bca;
 }
 
+.bundles {
+  display: flex; 
+  flex-direction: column;
+}
+
 .footer{
   display: flex; 
   justify-content: center;

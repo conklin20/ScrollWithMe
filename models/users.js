@@ -45,10 +45,10 @@ var userSchema = new mongoose.Schema({
     ], 
     bundles: [
         {
-            alias: { type: String },
             resumeId: mongoose.Schema.Types.ObjectId,
             coverLetterId: mongoose.Schema.Types.ObjectId,
-            expiresOn: Date
+            name: { type: String }
+            // expiresOn: Date
         }
     ]
 }); 

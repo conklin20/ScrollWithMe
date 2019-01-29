@@ -1,17 +1,5 @@
 List Items I am Working On 
 
-STATUS          DATE        TYPE      DESC                                                                              FILES INVOLVED
-In Process      7/12/18     PBI       Ability for user to create bundles 
-Not Started                 PBI       Santize html body 
-Not Started                 PBI       Proficiency key stuck to right well 
-Not Started                 PBI       Flex the "Other" section - space around
-Not Started                 PBI       Add Certifications to Resume 
-Not Started                 BUG       Phone number doeast accept (555)-555-5555 format (currently using 555.555.5555)
+Moved to Trello
+https://trello.com/b/CRvT6LAh/scrollwithme
 
-Done            7/18/18     PBI       Lookup CoverLetter by title on index route                                        /routes/app/index.js
-Done            7/22/18     PBI       Reset section                                                                     /public/js/build-resume/index.js , /routes/api/build-resume/index.js , /views/build-resume/resume-edit.ejs
-Done            7/22/18     PBI       Created (Started) Data API                                                        /routes/api/data
-Done            1/25/19     PBI       Add tags/keywords to resume                                                       /routes/api/build-resume/index.js , /public/js/build-resume/tags.js , /views/build-resume/resume-edit.ejs , /public/stylesheets/printStyles/traditional.css
-Done            1/26/19     PBI       Copy/Clone Resume                                                                 /public/js/user/resume.js , /routes/api/build-resume/index.js
-Done            1/26/19     PBI       Toggle all 'detail' array visibility on print                                     /routes/api/build-resume/* , /public/js/build-resume/*
-Done            1/28/19     BUG       Saving User Profile defaults (default resume, cl) doesnt work                     /routes/app/index.js

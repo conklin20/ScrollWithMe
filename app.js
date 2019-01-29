@@ -36,12 +36,12 @@ var appIndex               = require("./routes/app/index"),
     apiUsers               = require("./routes/api/user/user"),
     apiCoverLetter         = require("./routes/api/user/cover-letter"),
     apiReferences          = require("./routes/api/user/reference"),
-    apiData                = require("./routes/api/data/index");
-    // apiBundle              = require("./routes/api/user/bundle"),
+    apiData                = require("./routes/api/data/index"),
+    apiBundle              = require("./routes/api/user/bundle");
 
 // creating an array of our routes, so we dont have to individually call app.use() to all of them (ln ~158)
 var appRoutes = [appAuth, appUsers, appIndex, appCoverLetter, appReferences, appResumeIndex];
-var apiRoutes = [apiResumeIndex, apiTimeline, apiSkills, apiExperience, apiEducation, apiInterests, apiProjects, apiQuotes, apiOther, apiUsers, apiCoverLetter, apiReferences, apiData];
+var apiRoutes = [apiResumeIndex, apiTimeline, apiSkills, apiExperience, apiEducation, apiInterests, apiProjects, apiQuotes, apiOther, apiUsers, apiCoverLetter, apiReferences, apiData, apiBundle];
 
 
 // **********************

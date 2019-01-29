@@ -153,6 +153,50 @@ router.get('/u/:userId/r/:resumeId/cl/:coverLetterID', function(req, res) {
     }); 
 });
 
+// SHOW SPECIFIC RESUME & COVER LETTER BASED OFF OF A 'BUNDLE'
+router.get('/:username/b/:bundleName', function(req, res) {
+    //find the user in the DB 
+    User.findOne({username: req.params.username }, function(err, foundUser){
+    if(err){
+        console.log(err); 
+    } else {
+        if(foundUser) {
+            if(foundUser.resumes.length > 0){
+                
+                //find the bundle from the bundle name
+                let idx = foundUser.bundles.map(function(x) {return x.name; }).indexOf(req.params.bundleName);
+                if(idx > -1){
+                    let foundBundle = foundUser.bundles[idx];
+                    
+                    //now that we have the bundle, we need to find the resume and cover letter associated with it
+                    Resume.findById(foundBundle.resumeId, function(err, foundResume){
+                        if(err){
+                            console.log(err);
+                        } else {
+                            CoverLetter.findById(foundBundle.coverLetterId, function(err, foundCL) {
+                                if(err){
+                                    console.log(err);
+                                } else {
+                                    res.render('index', { user: foundUser, resume: foundResume, coverLetter: foundCL });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    res.status(404).json({ data: "No Bundle Found"});
+                }
+            } else {
+                // user wasnt found
+                res.status(404).json({ data: "No Resumes Found"});
+            }
+        } else {
+            // user wasnt found
+            res.status(404).json({ data: "User Profile Not Found"});
+        }
+    }
+    }); 
+});
+
 // THIS IS TO SHORT CIRCUIT AN ANNOYING BUG WHERE EXPRESS TRIES TO REDIRECT TO /favicon/ico
 router.get('/favicon.ico', function(req, res) {
     res.status(204);

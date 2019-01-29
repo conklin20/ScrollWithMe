@@ -55,12 +55,11 @@ router.put(rootUrl+'/:userId', middleware.isAccountOwner, function(req, res){
       console.log(err); 
     } else {
       // save defaults
-      // eval(require("locus"))
+      
       updatedUser.defaults.resume         = req.body.defaults.resume; 
       updatedUser.defaults.coverLetter    = req.body.defaults.coverLetter; 
       updatedUser.defaults.printTheme     = req.body.defaults.printTheme;
       updatedUser.defaults.printFontSize  = req.body.defaults.printFontSize;
-      // eval(require("locus"))
       
       updatedUser.save(); 
       
