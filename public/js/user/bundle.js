@@ -117,6 +117,12 @@ function getCoverLetters(url){
 }
 
 function displayBundles(bundles) {
+  if(bundles.data.length > 0){
+    $('#msg').text('Existing Bundles');
+  } else {
+    $('#msg').text('No Bundles Found');
+  }
+  $('#count').text(bundles.data.length); 
   
   bundles.data.forEach(function(bundle){
     var bundleHTML = '<li>' + 
@@ -129,10 +135,9 @@ function displayBundles(bundles) {
 }
 
 function rebuildBundleList(url){
-  //remove the cl's from list
   $('.bundles').empty();
   
-  //rebuild the cl list
+  //rebuild the bundle list
   $.getJSON(url)
   .then(displayBundles)
   .catch(function(err){

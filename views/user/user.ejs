@@ -107,7 +107,7 @@
                     <div class="tab-pane section" id="bundles">
                         <div class="account-section">
                             <h3 class="text-center">Bundles
-                                <span class="badge"><%= user.bundles.length %></span> 
+                                <span id="count" class="badge"><%= user.bundles.length %></span> 
                             </h3>
                             <div class="create-bundle">
                                 <div class="form-group">
@@ -130,14 +130,10 @@
                                     <button id="btn-add-bundle" class="btn btn-lg btn-success btn-block">Submit!</button>
                                 </div>
                             </div>
-                        <% if(user.bundles && user.bundles.length > 0) { %>  
-                            <span>Existing Bundles</span>
-                                <ul class="bundles">
-                                    <!--Now using an AJAX call to build out this list-->
-                                </ul>
-                            <% } else { %>
-                                <p>No bundles found</p>
-                            <% } %>
+                            <p id="msg">No Bundles Found</p>
+                            <ul class="bundles">
+                                <!--Now using an AJAX call to build out this list-->
+                            </ul>
                         </div>
                     </div>
                     <!--Bundles section end-->
