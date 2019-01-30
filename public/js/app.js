@@ -18,4 +18,6 @@ $(document).ready(function(){
   .sticky({
     context: '#context'
   });
+  
+  // loadIntro()
 });

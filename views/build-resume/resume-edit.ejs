@@ -61,19 +61,19 @@
                                 <div class="col-sm-3"></div>
                                 <div class="col-sm-6">
                                     <label class="pull-left" for="alias">Alias</label>
-                                    <input class="form-control summary" type="text" name="resume[alias]" value="<%= resume.alias %>" required>
+                                    <input class="form-control summary" type="text" name="resume[alias]" value="<%= resume.alias %>" maxlength="50" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <label class="pull-left" for="introduction">Say Hello</label>
-                                    <input class="form-control summary" type="text" name="resume[introduction]" value="<%= resume.introduction %>" maxlength="50" required>
+                                    <input class="form-control summary" type="text" name="resume[introduction]" value="<%= resume.introduction %>" maxlength="150" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <label class="pull-left" for="elevatorPitch">Elevator Pitch</label>
-                                    <input class="form-control summary" type="text" name="resume[elevatorPitch]" value="<%= resume.elevatorPitch %>" maxlength="150" required>
+                                    <input class="form-control summary" type="text" name="resume[elevatorPitch]" value="<%= resume.elevatorPitch %>" maxlength="500" required>
                                 </div>
                             </div>
                             <div class="form-group">
