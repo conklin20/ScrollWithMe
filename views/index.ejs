@@ -20,14 +20,18 @@
         
         <!--Landing Page Section-->
         <section class="landing-page section-background" style="background-image: url(<%= resume.backgroundImg %>); color: <%= resume.fontColor %>; order: -1; ">
-            <div class="introduction"><h3><%- resume.introduction %></h3></div>
-            <!--<div class="introduction"><h3 id='intro' data-intro='<%= resume.introduction %>'></h3></div>-->
-            <div class="elevator-pitch">
-                <div class="block"></div>
-                <div><h3><%- resume.elevatorPitch %></h3></div>
-                <!--<div><h3 id='elevator' data-elevator='<%= resume.elevatorPitch %>' > </h3></div>-->
-                <div class="block"></div>
-            </div>
+            <!--<div id="landing-message">-->
+                <div class="introduction">
+                    <div class="block"></div>
+                    <div class="type-style"><h3 id='intro' data-intro='<%= resume.introduction %>'> </h3></div>
+                    <div class="block"></div>
+                </div>
+                <div class="elevator-pitch">
+                    <div class="block"></div>
+                    <div class="elevator type-style"><h3 id='elevator' data-elevator='<%= resume.elevatorPitch %>' > </h3></div>
+                    <div class="block"></div>
+                </div>
+            <!--</div>-->
 		    <% if(coverLetter) { %>
                 <!-- Modal -->
                 <div id="cover-letter" class="cover-letter" style="color: #000000">

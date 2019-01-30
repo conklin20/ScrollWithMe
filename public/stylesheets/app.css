@@ -265,24 +265,36 @@ Landing page section
     font-size: 4em; 
 }
 
-.introduction, 
-.elevator-pitch {
-    opacity: 0;
-}
+/*.introduction, */
+/*.elevator-pitch {*/
+/*    opacity: 0;*/
+/*}*/
 
-.introduction {
-    animation: 4s slidefadeIn 1s forwards;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex-grow: 2; 
-}
+/*.introduction {*/
+/*    animation: 4s slidefadeIn 1s forwards;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    justify-content: center;*/
+/*    flex-grow: 2; */
+/*}*/
 
-.elevator-pitch {
-    animation: 10s slidefadeIn 4s forwards;
-    display: flex;
-    justify-content: center;
-    flex-grow: 4;
+/*.elevator-pitch {*/
+/*    animation: 10s slidefadeIn 4s forwards;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    flex-grow: 4;*/
+/*}*/
+
+
+.elevator-pitch, .introduction {
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 5%;
+    text-align: left;
+    background-color: #424242;
+    padding: 1%;
+    border-radius: 20px;
+    opacity: 0.9;
 }
 
 .block{
