@@ -55,8 +55,8 @@ function loadIntro(){
 }
 
 function loadElevator(){
-  console.log($('#elevator-pitch').length)
-  if($('#elevator-pitch').length > 1){ 
+  console.log($('#elevator').data('elevator').trim())
+  if($('#elevator').data('elevator').trim() != ''){ 
     $('#elevator-pitch').addClass('landing-msg')
     let elevator = $('#elevator').data('elevator').split('');
     let randDelay = 0;
