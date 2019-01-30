@@ -19,45 +19,46 @@ $(document).ready(function(){
     context: '#context'
   });
   
-  loadIntro()
+  // loadIntro()
 });
 
+// code for mimicking typing
+// function loadIntro(){
+//   $('#intro').css({
+//       fontSize: 48,
+//       fontFamily: 'system-ui'
+//   }); 
+//   let intro = $('#intro').data('intro').split('');
+//   let randDelay = 1000;
+//   (function theLoop (i) {
+//     setTimeout(function () {
+//       $('#intro').append(intro[i])
+//       if (i <= intro.length) {
+//         i++;        
+//         theLoop(i);       
+//       }
+//     }, randDelay);
+//     randDelay = (i % 2 === 0 ? randDelay = Math.random() * (150 - 0) + 0 : randDelay)
+//   })(0)
+//   loadElevator();
+// }
 
-function loadIntro(){
-  $('#intro').css({
-      fontSize: 48,
-      fontFamily: 'system-ui'
-  }); 
-  let intro = $('#intro').data('intro').split('');
-  let randDelay = 1000;
-  (function theLoop (i) {
-    setTimeout(function () {
-      $('#intro').append(intro[i])
-      if (i <= intro.length) {
-        i++;        
-        theLoop(i);       
-      }
-    }, randDelay);
-    randDelay = (i % 2 === 0 ? randDelay = Math.random() * (150 - 0) + 0 : randDelay)
-  })(0)
-  loadElevator();
-}
-
-function loadElevator(){
-  $('#elevator').css({
-      fontSize: 48,
-      fontFamily: 'system-ui'
-  });
-  let elevator = $('#elevator').data('elevator').split('');
-  let randDelay = 6000;
-  (function theLoop (i) {
-    setTimeout(function () {
-      $('#elevator').append(elevator[i])
-      if (i <= elevator.length) {
-        i++;        
-        theLoop(i);       
-      }
-    }, randDelay);
-    randDelay = (i % 2 === 0 ? randDelay = Math.random() * (150 - 0) + 0 : randDelay)
-  })(0)
-}
+// function loadElevator(){
+//   $('#elevator').css({
+//       fontSize: 48,
+//       fontFamily: 'system-ui'
+//   });
+//   let elevator = $('#elevator').data('elevator').split('');
+//   let randDelay = 6000;
+//   (function theLoop (i) {
+//     setTimeout(function () {
+//       $('#elevator').append(elevator[i])
+//       if (i <= elevator.length) {
+//         i++;        
+//         theLoop(i);       
+//       }
+//     }, randDelay);
+//     randDelay = (i % 2 === 0 ? randDelay = Math.random() * (150 - 0) + 0 : randDelay)
+//   })(0)
+// }
+// end code for mimicking typing
