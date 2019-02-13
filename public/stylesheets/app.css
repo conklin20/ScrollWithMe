@@ -95,6 +95,25 @@ section a {
         font-size: .8em; 
     }
     
+    .type-style h3 {
+        font-size: 1em;
+        font-family: 'system-ui';
+        display: inline-block;
+    }
+    
+        
+    .landing-msg {
+        width: 80%;
+        margin: 1%;
+        margin-left: 10%;
+        margin-top: 10%;
+        padding: 2%;
+    }
+    
+    .block{
+        width: 10%; 
+    }
+    
     .timeline-section, .skills-section, .interests-section, .work-experience-section, .education-section,  .quotes-section, .other-section, .projects-section {
         text-align: center; 
         width: 95%; 
@@ -148,6 +167,24 @@ section a {
         font-size: 1em; 
     }
     
+    .landing-msg {
+        width: 60%;
+        margin: 2%;
+        margin-left: 15%;
+        margin-top: 10%;
+        padding: 2%;
+    }
+    
+    .block{
+        width: 15%; 
+    }
+    
+    .type-style h3 {
+        font-size: 1.5em;
+        font-family: 'system-ui';
+        display: inline-block;
+    }
+    
     .timeline-section, .skills-section, .interests-section, .work-experience-section, .education-section,  .quotes-section, .other-section, .projects-section {
         text-align: center; 
         width: 80%; 
@@ -196,6 +233,24 @@ section a {
     
     html {
         font-size: 1.5em; 
+    }
+    
+    .landing-msg {
+        width: 60%;
+        margin: 2%;
+        margin-left: 20%;
+        margin-top: 5%;
+        padding: 2%;
+    }
+    
+    .block{
+        width: 20%; 
+    }
+    
+    .type-style h3 {
+        font-size: 2em;
+        font-family: 'system-ui';
+        display: inline-block;
     }
     
     .timeline-section, .skills-section, .interests-section, .work-experience-section, .education-section,  .quotes-section, .other-section, .projects-section {
@@ -265,12 +320,8 @@ Landing page section
     font-size: 4em; 
 }
 
-/*.introduction, */
-/*.elevator-pitch {*/
-/*    opacity: 0;*/
-/*}*/
-
-/*.introduction {*/
+/*#introduction {*/
+    /*opacity: 0;*/
 /*    animation: 4s slidefadeIn 1s forwards;*/
 /*    display: flex;*/
 /*    flex-direction: column;*/
@@ -278,7 +329,8 @@ Landing page section
 /*    flex-grow: 2; */
 /*}*/
 
-/*.elevator-pitch {*/
+/*#elevator-pitch {*/
+    /*opacity: 0;*/
 /*    animation: 10s slidefadeIn 4s forwards;*/
 /*    display: flex;*/
 /*    justify-content: center;*/
@@ -286,23 +338,60 @@ Landing page section
 /*}*/
 
 
+/*@keyframes slidefadeIn {*/
+/*    100% { opacity: .9; }*/
+/*}*/
+
+
 .landing-msg {
-    width: 40%;
-    margin-left: 30%;
-    margin-top: 5%;
     text-align: left;
     background-color: #424242;
-    padding: 1%;
     border-radius: 20px;
-    opacity: 0.9;
+    opacity: 0.9; 
 }
 
-.block{
-    width: 30%; 
+.blinking-cursor {
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
 }
 
-@keyframes slidefadeIn {
-    100% { opacity: .9; }
+@keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-moz-keyframes blink {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-webkit-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
+}
+
+@-o-keyframes "blink" {
+  from, to {
+    color: transparent;
+  }
+  50% {
+    color: black;
+  }
 }
 
 /******************************************************************************

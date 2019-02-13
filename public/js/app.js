@@ -1,13 +1,9 @@
 'use strict';
 
 $(document).ready(function(){
-  $('.type-style h3').css({
-      fontSize: 36,
-      fontFamily: 'system-ui',
-      fontWeight: 'bold'
-  });
   $('#introduction').removeClass('landing-msg')
   $('#elevator-pitch').removeClass('landing-msg')
+  $('#intro-cursor').removeClass('blinking-cursor');
   
   //if cover letter is being shown, add an event listener to close it
   if($('#close-cover-letter').length){
@@ -32,13 +28,16 @@ $(document).ready(function(){
     context: '#context'
   });
   
-  //loadIntro()
 });
 
 // code for mimicking typing
 function loadIntro(){
+  //add the blinking cursor 
+  $('#intro-cursor').text('|');
+  $('#intro-cursor').addClass('blinking-cursor');
+  
   $('#introduction').addClass('landing-msg')
-  let intro = $('#intro').data('intro').split('');
+  let intro = $('#intro').data('intro').trim().split('');
   let randDelay = 1000;
   (function theLoop (i) {
     setTimeout(function () {
@@ -55,10 +54,16 @@ function loadIntro(){
 }
 
 function loadElevator(){
-  console.log($('#elevator').data('elevator').trim())
   if($('#elevator').data('elevator').trim() != ''){ 
+    //remove cursor from intro
+    $('#intro-cursor').text('');
+    $('#intro-cursor').removeClass('blinking-cursor');
+    //add the blinking cursor to elevator 
+    $('#elevator-cursor').text('|');
+    $('#elevator-cursor').addClass('blinking-cursor');
+  
     $('#elevator-pitch').addClass('landing-msg')
-    let elevator = $('#elevator').data('elevator').split('');
+    let elevator = $('#elevator').data('elevator').trim().split('');
     let randDelay = 0;
     (function theLoop (i) {
       setTimeout(function () {

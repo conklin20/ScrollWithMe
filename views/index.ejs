@@ -22,12 +22,18 @@
         <section class="landing-page section-background" style="background-image: url(<%= resume.backgroundImg %>); color: <%= resume.fontColor %>; order: -1; ">
             <div id="introduction" class="landing-msg">
                 <div class="block"></div>
-                <div class="type-style"><h3 id='intro' data-intro='<%= resume.introduction %>'> </h3></div>
+                <div class="type-style">
+                    <h3 style="display: inline;" id='intro' data-intro='<%= resume.introduction %>'></h3>
+                    <h3 id="intro-cursor" class="blinking-cursor"></h3>
+                </div>
                 <div class="block"></div>
             </div>
             <div id="elevator-pitch" class="landing-msg">
                 <div class="block"></div>
-                <div class="elevator type-style"><h3 id='elevator' data-elevator='<%= resume.elevatorPitch %>' > </h3></div>
+                <div class="elevator type-style">
+                    <h3 style="display: inline;" id='elevator' data-elevator='<%= resume.elevatorPitch %>' > </h3> 
+                    <h3 id="elevator-cursor" class="blinking-cursor"></h3> 
+                </div>
                 <div class="block"></div>
             </div>
 		    <% if(coverLetter) { %>
