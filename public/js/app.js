@@ -5,6 +5,9 @@ $(document).ready(function(){
   $('#elevator-pitch').removeClass('landing-msg')
   $('#intro-cursor').removeClass('blinking-cursor');
   
+  //remove Skill Proficiency classes
+  $('.proficiency').remove();
+  
   //if cover letter is being shown, add an event listener to close it
   if($('#close-cover-letter').length){
     var closeCoverLetterBtn = document.getElementById('close-cover-letter'); 
@@ -28,6 +31,14 @@ $(document).ready(function(){
     context: '#context'
   });
   
+  $('.skill').hover(
+    function() {
+      buildProficiency($(this)); 
+    }, 
+    function() {
+      $('.skill i').remove();
+    }
+  );
 });
 
 // code for mimicking typing
@@ -78,3 +89,23 @@ function loadElevator(){
   }
 }
 // end code for mimicking typing
+
+//build proficiency 
+function buildProficiency(skill){
+  let proficiency = skill.data('proficiency');
+  let remaining = 5; 
+  
+  //append whole stars
+  skill.append(('<i class="fas fa-star"></i>').repeat(proficiency));
+  remaining = remaining - proficiency; 
+  
+  //append half stars
+  if (remaining % 1 !== 0){
+    skill.append('<i class="fas fa-star-half-alt"></i>')
+    remaining = remaining - 0.5; 
+  }
+  
+  //append empty stars
+  skill.append(('<i class="far fa-star"></i>').repeat(remaining));
+  
+}
