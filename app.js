@@ -97,6 +97,14 @@ passport.use(new LinkedinStrategy({
         clientID: LINKEDIN_CLIENT_ID,
         clientSecret: LINKEDIN_CLIENT_SECRET,
         callbackURL: LINKEDIN_CALLBACK || "https://scroll-with-me-conklin20.c9users.io/auth/linkedin/callback",
+        profileFields: [
+            "formatted-name",
+            "headline",
+            "id",
+            "public-profile-url",
+            "email-address",
+            "location",
+        ],
         scope: ['r_basicprofile', 'r_emailaddress'],
         passReqToCallback: true
     },
