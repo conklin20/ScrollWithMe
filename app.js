@@ -6,8 +6,8 @@ var express                 = require('express'),
     cookieParser            = require("cookie-parser"),
     expressSession          = require("express-session"),
     passport                = require('passport'),
-    // LinkedinStrategy        = require('passport-linkedin-oauth2').Strategy, //this package is not yet compatible with LinkedIn OAuth v2 
-    LinkedinStrategy        = require('@sokratis/passport-linkedin-oauth2').Strategy,
+    LinkedinStrategy        = require('passport-linkedin-oauth2').Strategy, //this package is not yet compatible with LinkedIn OAuth v2 
+    // LinkedinStrategy        = require('@sokratis/passport-linkedin-oauth2').Strategy,
     //seedDB                  = require("./seed"),
     expressSanitizer        = require("express-sanitizer"),
     //forceSsl                = require('force-ssl-heroku'),
@@ -97,15 +97,16 @@ passport.use(new LinkedinStrategy({
         clientID: LINKEDIN_CLIENT_ID,
         clientSecret: LINKEDIN_CLIENT_SECRET,
         callbackURL: LINKEDIN_CALLBACK || "https://scroll-with-me-conklin20.c9users.io/auth/linkedin/callback",
-        profileFields: [
-            "formatted-name",
-            "headline",
-            "id",
-            "public-profile-url",
-            "email-address",
-            "location",
-        ],
         scope: ['r_basicprofile', 'r_emailaddress'],
+        // scope: ['r_basicprofile'],
+        // profileFields: [
+        //     "formatted-name",
+        //     "headline",
+        //     "id",
+        //     "public-profile-url",
+        //     "email-address",
+        //     "location",
+        // ],
         passReqToCallback: true
     },
     function(req, accessToken, refreshToken, profile, done) {
