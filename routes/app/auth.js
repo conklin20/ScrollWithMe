@@ -36,7 +36,7 @@ router.get('/', function(req, res) {
 //   request.  The first step in Linkedin authentication will involve
 //   redirecting the user to linkedin.com.  After authorization, Linkedin
 //   will redirect the user back to this application at /auth/linkedin/callback
-var state = "dsadh23hrioghwrg";
+var state = null;
 router.get('/auth/linkedin',
   passport.authenticate('linkedin', { state: state }),
   function(req, res){
@@ -53,6 +53,7 @@ router.get('/auth/linkedin/callback',
   passport.authenticate('linkedin', { failureRedirect: '/login' }),
   function(req, res){
     try {
+      console.log(res);
       //check if user is in db, using the LinkedIn ID field
       if(req.user){
         User.findOne({ linkedinID: req.user.id }, function(err, foundUser){
